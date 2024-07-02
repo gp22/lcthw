@@ -54,9 +54,8 @@ void die(const char *message, struct Connection *conn) {
     exit(1);
 }
 
-void Address_print(struct Address *addr) {
-    //printf("%d %s %s\n", addr->id, addr->name, addr->email);
-    printf("%d %s\n", addr->id, addr->details);
+void Address_print(struct Address *addr, int max_data) {
+    printf("%d %s %s\n", addr->id, addr->details, addr->details + max_data);
 }
 
 int Calculate_db_size(int max_data, int max_rows) {
@@ -182,18 +181,26 @@ void Database_set(struct Connection *conn, int id, const char *name, const char 
         die("Name copy failed.", conn);
     }
 
+    int last_char = strlen(name);
+    addr->details[last_char] = '\0';
+
     res = strncpy(addr->details + max_data, email, max_data);
 
     if (!res) {
         die("Email copy failed.", conn);
     }
+
+    last_char = strlen(email);
+    addr->details[max_data + last_char] = '\0';
+
 }
 
 void Database_get(struct Connection *conn, int id) {
     struct Address *addr = &conn->db->rows[id];
 
     if (addr->set) {
-        Address_print(addr);
+        int max_data = conn->db->config.max_data;
+        Address_print(addr, max_data);
     } else {
         die("ID is not set.", conn);
     }
@@ -212,7 +219,8 @@ void Database_list(struct Connection *conn) {
         struct Address *cur = &db->rows[i];
 
         if (cur->set) {
-            Address_print(cur);
+            int max_data = conn->db->config.max_data;
+            Address_print(cur, max_data);
         }
     }
 }
