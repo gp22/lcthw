@@ -93,13 +93,13 @@ void Database_create(struct Connection *conn, const int MAX_DATA, const int MAX_
     int i = 0;
     for (i = 0; i < MAX_ROWS; i++) {
         // Allocate memory for the name field.
-        conn->db->rows[i].name = malloc(MAX_DATA * sizeof(char));
+        conn->db->rows[i].name = (char *)malloc(MAX_DATA * sizeof(char));
         if (!conn->db->rows[i].name) {
             die("Memory error", conn);
         }
 
         // Allocate memory for the email field.
-        conn->db->rows[i].email = malloc(MAX_DATA * sizeof(char));
+        conn->db->rows[i].email = (char *)malloc(MAX_DATA * sizeof(char));
         if (!conn->db->rows[i].email) {
             die("Memory error", conn);
         }
