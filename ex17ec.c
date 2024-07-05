@@ -256,9 +256,21 @@ void Database_get(struct Connection *conn, int id) {
 }
 
 void Database_delete(struct Connection *conn, int id) {
-    conn->db->rows[id].set = 0;
-    conn->db->rows[id].name = "\0";
-    conn->db->rows[id].email = "\0";
+    if (conn->db->rows[id].set) {
+        conn->db->rows[id].set = 0;
+
+        char *res = strncpy(conn->db->rows[id].name, "\0", 1);
+        if (!res) {
+            die("Delete failed.", conn);
+        }
+
+        res = strncpy(conn->db->rows[id].email, "\0", 1);
+        if (!res) {
+            die("Delete failed.", conn);
+        }
+    } else {
+        die("ID is not set.", conn);
+    }
 }
 
 void Database_list(struct Connection *conn) {
