@@ -32,20 +32,30 @@ void Database_close(struct Connection *conn) {
             for (int i = 0; i < conn->db->max_rows; i++) {
                 if (conn->db->rows[i].name) {
                     free(conn->db->rows[i].name);
+                    conn->db->rows[i].name = NULL;
                 }
                 if (conn->db->rows[i].email) {
                     free(conn->db->rows[i].email);
+                    conn->db->rows[i].email = NULL;
                 }
             }
 
             free(conn->db->rows);
+            conn->db->rows = NULL;
+        }
+
+        if (conn->db->rows) {
+            free(conn->db->rows);
+            conn->db->rows = NULL;
         }
 
         if (conn->db) {
             free(conn->db);
+            conn->db = NULL;
         }
 
         free(conn);
+        conn = NULL;
     }
 }
 
@@ -288,27 +298,27 @@ int main(int argc, char *argv[]) {
 
     switch (action) {
         case 'c':
-            if (argc != 5) die("Need max data and max rows to set", NULL);
+            if (argc != 5) die("Need max data and max rows to set", conn);
 
             Database_create(conn, max_data, max_rows);
             Database_write(conn);
             break;
 
         case 'g':
-            if (argc != 4) die("Need an ID to get", NULL);
+            if (argc != 4) die("Need an ID to get", conn);
 
             Database_get(conn, id);
             break;
 
         case 's':
-            if (argc != 6) die("Need ID, name, email to set", NULL);
+            if (argc != 6) die("Need ID, name, email to set", conn);
 
             Database_set(conn, id, argv[4], argv[5]);
             Database_write(conn);
             break;
 
         case 'd':
-            if (argc != 4) die("Need ID to delete", NULL);
+            if (argc != 4) die("Need ID to delete", conn);
 
             Database_delete(conn, id);
             Database_write(conn);
@@ -319,7 +329,7 @@ int main(int argc, char *argv[]) {
             break;
 
         default:
-            die("Invalid action: c=create, g=get, s=set, d=del, l=list", NULL);
+            die("Invalid action: c=create, g=get, s=set, d=del, l=list", conn);
     }
 
     if (conn) Database_close(conn);
