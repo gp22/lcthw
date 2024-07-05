@@ -28,11 +28,24 @@ void Database_close(struct Connection *conn) {
             fclose(conn->file);
         }
 
+        if (conn->db->rows && conn->db->max_rows) {
+            for (int i = 0; i < conn->db->max_rows; i++) {
+                if (conn->db->rows[i].name) {
+                    free(conn->db->rows[i].name);
+                }
+                if (conn->db->rows[i].email) {
+                    free(conn->db->rows[i].email);
+                }
+            }
+
+            free(conn->db->rows);
+        }
+
         if (conn->db) {
             free(conn->db);
         }
 
-        // Free memory allocated for rows.
+        free(conn);
     }
 }
 
@@ -233,8 +246,9 @@ void Database_get(struct Connection *conn, int id) {
 }
 
 void Database_delete(struct Connection *conn, int id) {
-    struct Address addr = {.id = id, .set = 0};
-    conn->db->rows[id] = addr;
+    conn->db->rows[id].set = 0;
+    conn->db->rows[id].name = "\0";
+    conn->db->rows[id].email = "\0";
 }
 
 void Database_list(struct Connection *conn) {
