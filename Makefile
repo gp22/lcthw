@@ -1,11 +1,11 @@
 CC = cc
 CFLAGS=-Wall -Wextra -g -O0
 
-all: ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 ex22 ex23
+all: ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 ex22 ex23 ex24
 
 clean:
 	rm -rf ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 \
-		ex22.o ex22_main ex23
+		ex22.o ex22_main ex23 ex24
 
 ex1: ex1.c
 	$(CC) $(CFLAGS) ex1.c -o ex1
@@ -50,3 +50,5 @@ ex22: ex22.c
 ex23: ex23.c
 	$(CC) $(CFLAGS) ex23.c -o ex23
 
+ex24: ex24.c
+	$(CC) $(CFLAGS) ex24.c -o ex24
