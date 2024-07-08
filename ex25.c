@@ -100,11 +100,9 @@ int main(int argc, char *argv[]) {
     int rc = read_scan("%s", MAX_DATA, &first_name);
     check(rc == 0, "Failed first name.");
 
-
     printf("What's your initial? ");
-    rc = read_scan("%c\n", MAX_DATA, &initial);
+    rc = read_scan("%c\n", &initial);
     check(rc == 0, "Failed initial.");
-
 
     printf("What's your last name? ");
     rc = read_scan("%s", MAX_DATA, &last_name);
