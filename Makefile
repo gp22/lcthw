@@ -1,7 +1,8 @@
 CC = cc
 CFLAGS=-Wall -Wextra -g -O0
 
-all: ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 ex22 ex23 ex24 ex25
+all: ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 ex22 ex23 \
+	ex24 ex25
 
 clean:
 	rm -rf ex1 ex3 ex7 ex8 ex11 ex15 ex16 ex16ec ex17 ex17ec ex18 ex19 \
@@ -55,3 +56,6 @@ ex24: ex24.c
 
 ex25: ex25.c
 	$(CC) $(CFLAGS) ex25.c -o ex25
+
+logfind: logfind.c
+	$(CC) $(CFLAGS) logfind.c -o logfind
