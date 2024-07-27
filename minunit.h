@@ -2,7 +2,7 @@
 #ifndef _minunit_h
 #define _minunit_h
 
-#include <dbg.h>
+#include "dbg.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,7 +10,7 @@
 
 #define mu_assert(test, message)                                               \
   if (!(test)) {                                                               \
-    log_err(message);                                                          \
+    log_error(message);                                                        \
     return message;                                                            \
   }
 
