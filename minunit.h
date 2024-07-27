@@ -29,11 +29,11 @@
     char *result = name();                                                     \
     if (result != 0) {                                                         \
       printf("FAILED: %s\n", result);                                          \
-    } else                                                                     \
+    } else {                                                                   \
       printf("ALL TESTS PASSED\n");                                            \
-  }                                                                            \
-  printf("Tests run: %d\n", tests_run);                                        \
-  exit(result != 0);                                                           \
+    }                                                                          \
+    printf("Tests run: %d\n", tests_run);                                      \
+    exit(result != 0);                                                         \
   }
 
 int tests_run;
