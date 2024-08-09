@@ -12,7 +12,7 @@ typedef struct {
 
 RingBuffer *RingBuffer_create(int length);
 
-void RingBuffer_destroy(RingBuffer *buffer);
+void RingBuffer_destroy(RingBuffer **buffer);
 
 int RingBuffer_read(RingBuffer *buffer, char *target, int amount);
 

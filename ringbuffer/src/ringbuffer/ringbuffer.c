@@ -16,10 +16,11 @@ RingBuffer *RingBuffer_create(int length) {
     return buffer;
 }
 
-void RingBuffer_destroy(RingBuffer *buffer) {
+void RingBuffer_destroy(RingBuffer **buffer) {
     if (buffer) {
-        free(buffer->buffer);
-        free(buffer);
+        free((*buffer)->buffer);
+        free(*buffer);
+        *buffer = NULL;
     }
 }
 
