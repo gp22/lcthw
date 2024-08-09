@@ -1,12 +1,17 @@
 #include "minunit.h"
-#include "../ringbuffer.h"
+#include "../src/ringbuffer/ringbuffer.h"
+
+RingBuffer *buffer;
 
 char *test_RingBuffer_create() {
+    buffer = RingBuffer_create(10);
+    mu_assert(buffer != NULL, "Failed to create ring buffer.");
 
     return NULL;
 }
 
 char *test_RingBuffer_destroy() {
+    RingBuffer_destroy(buffer);
 
     return NULL;
 }
