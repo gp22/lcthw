@@ -2,7 +2,7 @@
 #ifndef _minunit_h
 #define _minunit_h
 
-#include "../dbg.h"
+#include "../src/ringbuffer/dbg.h"
 #include <stdio.h>
 #include <stdlib.h>
 
