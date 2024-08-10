@@ -1,6 +1,9 @@
 CFLAGS=-g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG $(OPTFLAGS)
 LIBS=-ldl $(OPTLIBS)
 
+PROGRAMS_SRC=$(wildcard bin/*.c)
+PROGRAMS=$(patsubst %.c,%,$(PROGRAMS_SRC))
+
 SOURCES=$(wildcard src/**/*.c src/*.c)
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
@@ -11,7 +14,7 @@ TARGET=build/ringbuffer.a
 SO_TARGET=$(patsubst %.a,%.so,$(TARGET))
 
 # The target build.
-all: $(TARGET) $(SO_TARGET) tests
+all: $(TARGET) $(SO_TARGET) tests $(PROGRAMS)
 
 $(TARGET): CFLAGS += -fPIC
 $(TARGET): build $(OBJECTS)
@@ -19,6 +22,7 @@ $(TARGET): build $(OBJECTS)
 	ranlib $@
 $(SO_TARGET): $(TARGET) $(OBJECTS)
 	$(CC) -shared -o $@ $(OBJECTS)
+$(PROGRAMS): CFLAGS += $(TARGET)
 
 build:
 	@mkdir -p build
@@ -31,6 +35,7 @@ tests: $(TESTS)
 	sh ./test/runtests.sh
 
 clean:
-	rm -f *.o
-	rm -f devpkg
-	rm -rf *.dSYM
+	rm -rf build $(OBJECTS) $(TESTS) $(PROGRAMS)
+	rm -rf test/tests.log
+	find . -name "*.gc*" -exec rm {} \;
+	rm -rf `find . -name "*.dSYM" -print`
