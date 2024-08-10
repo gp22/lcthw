@@ -22,7 +22,7 @@ $(TARGET): build $(OBJECTS)
 	ranlib $@
 $(SO_TARGET): $(TARGET) $(OBJECTS)
 	$(CC) -shared -o $@ $(OBJECTS)
-$(PROGRAMS): CFLAGS += $(TARGET)
+$(PROGRAMS): LDLIBS += $(TARGET)
 
 build:
 	@mkdir -p build
